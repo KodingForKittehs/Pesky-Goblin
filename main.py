@@ -18,4 +18,5 @@ async def on_messagett(message):
 
     await message.channel.send(f"{message.author.name} said '{message.content}'")
 
-client.run(os.getenv('TOKEN'))
+if __name__ == "__main__":
+  client.run(os.getenv('TOKEN'))

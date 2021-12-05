@@ -1,22 +1,20 @@
-import discord
 import os
+import logging
+from replit import db
+import goblin
 
-client = discord.Client()
+logging.basicConfig(level=logging.INFO)
+bot = goblin.PeskyGoblinBot(db=db, command_prefix='!')
 
-@client.event
-async def on_ready():
-    print('We have logged in as {0.user}'.format(client))
+@bot.command()
+async def test(ctx):
+    logging.info(f'commandola')
+    await ctx.send("test response")
 
-@client.event
-async def on_messagett(message):
-    print(message)
-    if message.author == client.user:
-        return
-
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
-
-    await message.channel.send(f"{message.author.name} said '{message.content}'")
+@bot.command(name="reload", help="Reloads goblin module from most recent source")
+async def reload(ctx):
+    reload(goblin)
+    print("Reloaded goblin")
 
 if __name__ == "__main__":
-  client.run(os.getenv('TOKEN'))
+    bot.run(os.getenv('TOKEN'))
